@@ -1,0 +1,12 @@
+certifi==2018.10.15
+chardet==3.0.4
+Django==1.11.16
+idna==2.7
+pytz==2018.5
+requests==2.20.0
+urllib3==1.24
+dj-database-url==0.4.1
+gunicorn==19.6.0
+whitenoise==3.2.1
+psycopg2==2.7.4
+psycopg2-binary
