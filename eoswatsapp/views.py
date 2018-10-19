@@ -7,7 +7,8 @@ import json
 from .models import message_details
 from django.contrib.auth.models import User
 import requests as req
-from django.db.models import Max
+from django.db.models import Max,Q
+
 
 def notify_user():
 	max_pos = message_details.objects.all().aggregate(Max('acction_pos'))
@@ -46,7 +47,7 @@ def getmsg(request):
 		notify_user()
 		user_from = str(request.GET.get("user_from",""))
 		user_to = str(request.GET.get("user_to",""))
-		data = message_details.objects.filter(user_from = user_from,user_to = user_to).order_by("-created")
+		data = message_details.objects.filter(Q(Q(user_from = user_from) & Q(user_to = user_to)) | Q(Q(user_from = user_to) & Q(user_to = user_from))).order_by("-created")
 		print message_details.objects.filter(user_from = user_from,user_to = user_to).order_by("-created").distinct()
 		data = serializers.serialize("json", data, fields=('message', 'user_from','user_to','acction_pos','nonce','checksum'))
 		return JsonResponse(data, safe=False)
