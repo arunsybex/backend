@@ -48,9 +48,9 @@ def getmsg(request):
 		user_from = str(request.GET.get("user_from",""))
 		user_to = str(request.GET.get("user_to",""))
 		limit = int(request.GET.get("limit",10))
-		pages = int(request.GET.get("pages",1))
+		pages = int(request.GET.get("pages",0))
 		if user_to != "":
-			data = message_details.objects.filter(Q(Q(user_from = user_from) & Q(user_to = user_to)) | Q(Q(user_from = user_to) & Q(user_to = user_from))).order_by("-created")[:pages*limit]
+			data = message_details.objects.filter(Q(Q(user_from = user_from) & Q(user_to = user_to)) | Q(Q(user_from = user_to) & Q(user_to = user_from))).order_by("-created")[pages:limit]
 			data = serializers.serialize("json", data, fields=('message', 'user_from','user_to','acction_pos','nonce','checksum'))
 			return JsonResponse(data, safe=False)
 		else:
