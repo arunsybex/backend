@@ -13,7 +13,7 @@ from django.db.models import Max,Q
 def notify_user():
 	max_pos = message_details.objects.all().aggregate(Max('acction_pos'))
 	print max_pos["acction_pos__max"]
-	max_pos = int(max_pos["acction_pos__max"]) if (max_pos["acction_pos__max"] is not None) else 52;
+	max_pos = int(max_pos["acction_pos__max"]) if (max_pos["acction_pos__max"] is not None) else 51;
 	max_pos1 = max_pos + 1
 	data = {
 		"pos" : max_pos1,
