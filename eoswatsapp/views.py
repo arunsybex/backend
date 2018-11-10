@@ -54,7 +54,7 @@ def getmsg(request):
 			data = serializers.serialize("json", data, fields=('message', 'user_from','user_to','acction_pos','nonce','checksum','created'))
 			return JsonResponse(data, safe=False)
 		else:
-			data = message_details.objects.filter(Q(user_from = user_from) | Q(user_to = user_from)).order_by("created")
+			data = message_details.objects.filter(Q(user_from = user_from) | Q(user_to = user_from)).order_by("-created")
 			data = serializers.serialize("json", data)
 			return JsonResponse(data, safe=False)
 	else:
